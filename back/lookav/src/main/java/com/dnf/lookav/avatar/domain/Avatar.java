@@ -30,4 +30,6 @@ public class Avatar {
     private Integer likes;
 
     private LocalDateTime registerDate;
+
+    private String image;
 }
