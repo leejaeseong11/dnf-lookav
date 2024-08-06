@@ -23,6 +23,9 @@ public class Avatar {
 
     private String job;
 
+    @Enumerated(EnumType.STRING)
+    private Server server;
+
     @ColumnDefault("0")
     private Integer likes;
 
