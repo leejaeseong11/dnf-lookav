@@ -21,6 +21,8 @@ public class Avatar {
 
     private String characterId;
 
+    private String job;
+
     @ColumnDefault("0")
     private Integer likes;
 
