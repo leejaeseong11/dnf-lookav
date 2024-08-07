@@ -3,6 +3,8 @@ package com.dnf.lookav.common;
 import lombok.extern.slf4j.Slf4j;
 
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,10 +16,14 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 @Slf4j
-public class Util {
-    public static String dnfApiUrl = "https://api.neople.co.kr/df";
+@Component
+public class DnfApi {
+    @Value("${dnf.api.key}")
+    private String apiKey;
 
-    public static String encodeURIComponent(String component) {
+    private static final String dnfApiUrl = "https://api.neople.co.kr/df";
+
+    private String encodeURIComponent(String component) {
         String result = null;
 
         try {
@@ -28,7 +34,7 @@ public class Util {
         return result;
     }
 
-    public static JSONObject getCharacterId(String serverId, String characterName, String apiKey) {
+    public JSONObject getCharacterId(String serverId, String characterName) {
         try {
             String addUrl =
                     "/servers/"
