@@ -1,7 +1,9 @@
 package com.dnf.lookav.avatar.controller;
 
+import com.dnf.lookav.avatar.dto.AvatarDto;
 import com.dnf.lookav.avatar.exception.ErrorCode;
 import com.dnf.lookav.avatar.exception.MyException;
+import com.dnf.lookav.avatar.service.AvatarService;
 import com.dnf.lookav.common.AwsS3;
 import com.dnf.lookav.common.DnfApi;
 
@@ -9,10 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.json.JSONObject;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -21,9 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class AvatarController {
     private final DnfApi dnfApi;
     private final AwsS3 awsS3;
+    private final AvatarService avatarService;
 
     @GetMapping
-    public String search() {
+    public String search(@RequestParam(value = "date", defaultValue = "all") String date) {
         JSONObject result = dnfApi.getCharacterId("cain", "안중");
         String resultString = result.getJSONArray("rows").getJSONObject(0).getString("characterId");
         awsS3.uploadImage(
@@ -33,8 +33,8 @@ public class AvatarController {
     }
 
     @PostMapping("/add")
-    public String add(String characterName, String server) {
-
+    public String add(@RequestBody AvatarDto avatarDto) {
+        avatarService.saveAvatar(avatarDto);
         return "test";
     }
 

@@ -38,14 +38,30 @@ public class DnfApi {
     }
 
     public JSONObject getCharacterId(String serverId, String characterName) {
+        String addUrl =
+                "/servers/"
+                        + serverId
+                        + "/characters?characterName="
+                        + encodeURIComponent(characterName)
+                        + "&apikey="
+                        + apiKey;
+        return getDataFromDnfApi(addUrl);
+    }
+
+    public JSONObject getCharacterAvatar(String serverId, String characterId) {
+        String addUrl =
+                "/servers/"
+                        + serverId
+                        + "/characters/"
+                        + characterId
+                        + "/equip/avatar"
+                        + "?apikey="
+                        + apiKey;
+        return getDataFromDnfApi(addUrl);
+    }
+
+    private static JSONObject getDataFromDnfApi(String addUrl) {
         try {
-            String addUrl =
-                    "/servers/"
-                            + serverId
-                            + "/characters?characterName="
-                            + encodeURIComponent(characterName)
-                            + "&apikey="
-                            + apiKey;
             URL url = new URL(dnfApiUrl + addUrl);
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();

@@ -1,6 +1,5 @@
 package com.dnf.lookav.avatar.dto;
 
-import com.dnf.lookav.avatar.domain.Server;
 
 import lombok.Data;
 
@@ -10,7 +9,7 @@ import java.time.LocalDateTime;
 public class AvatarDto {
     private String characterId;
     private String job;
-    private Server server;
+    private String serverId;
     private Integer likes;
     private LocalDateTime registerDate;
     private String image;

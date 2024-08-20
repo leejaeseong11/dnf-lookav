@@ -1,18 +1,20 @@
 package com.dnf.lookav.avatar.domain;
 
+import com.dnf.lookav.avatar.dto.AvatarDto;
+
 import jakarta.persistence.*;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Builder
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Avatar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,4 +34,15 @@ public class Avatar {
     private LocalDateTime registerDate;
 
     private String image;
+
+    public static Avatar toEntity(AvatarDto avatarDto) {
+        return Avatar.builder()
+                .characterId(avatarDto.getCharacterId())
+                .job(avatarDto.getJob())
+                .server(Server.valueOf(avatarDto.getServerId()))
+                .likes(avatarDto.getLikes())
+                .registerDate(avatarDto.getRegisterDate())
+                .image(avatarDto.getImage())
+                .build();
+    }
 }

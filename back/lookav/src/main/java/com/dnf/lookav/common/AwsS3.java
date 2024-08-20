@@ -21,13 +21,16 @@ public class AwsS3 {
     @Value("${cloud.aws.s3.bucket}")
     private String bucketName;
 
+    public static final String IMAGE_LINK = "https://lookav.s3.ap-northeast-2.amazonaws.com/";
+    public static final String DNF_IMAGE_LINK = "https://img-api.neople.co.kr/df/servers/";
+
     public AwsS3(AmazonS3 amazonS3) {
         this.amazonS3 = amazonS3;
     }
 
-    public void uploadImage(String characterId, String imageUrl) {
+    public void uploadImage(String characterId, String serverId) {
         try {
-            URL url = new URL(imageUrl);
+            URL url = new URL(DNF_IMAGE_LINK + serverId + "/characters/" + characterId + "?zoom=1");
             try (InputStream in = url.openStream()) {
                 if (amazonS3 != null) {
                     PutObjectRequest putObjectRequest =
