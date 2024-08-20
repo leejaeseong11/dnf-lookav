@@ -1,6 +1,5 @@
 package com.dnf.lookav.avatar.dto;
 
-
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -12,5 +11,4 @@ public class AvatarDto {
     private String serverId;
     private Integer likes;
     private LocalDateTime registerDate;
-    private String image;
 }

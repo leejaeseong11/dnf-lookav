@@ -35,7 +35,6 @@ public class AvatarServiceImpl implements AvatarService {
         avatarDto.setLikes(0);
         avatarDto.setRegisterDate(LocalDateTime.now());
         awsS3.uploadImage(avatarDto.getCharacterId(), avatarDto.getServerId());
-        avatarDto.setImage(AwsS3.IMAGE_LINK + avatarDto.getCharacterId() + ".jpg");
         avatarRepository.save(Avatar.toEntity(avatarDto));
 
         // todo: sava avatar

@@ -33,8 +33,6 @@ public class Avatar {
 
     private LocalDateTime registerDate;
 
-    private String image;
-
     public static Avatar toEntity(AvatarDto avatarDto) {
         return Avatar.builder()
                 .characterId(avatarDto.getCharacterId())
@@ -42,7 +40,6 @@ public class Avatar {
                 .server(Server.valueOf(avatarDto.getServerId()))
                 .likes(avatarDto.getLikes())
                 .registerDate(avatarDto.getRegisterDate())
-                .image(avatarDto.getImage())
                 .build();
     }
 }

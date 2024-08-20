@@ -21,7 +21,6 @@ public class AwsS3 {
     @Value("${cloud.aws.s3.bucket}")
     private String bucketName;
 
-    public static final String IMAGE_LINK = "https://lookav.s3.ap-northeast-2.amazonaws.com/";
     public static final String DNF_IMAGE_LINK = "https://img-api.neople.co.kr/df/servers/";
 
     public AwsS3(AmazonS3 amazonS3) {
