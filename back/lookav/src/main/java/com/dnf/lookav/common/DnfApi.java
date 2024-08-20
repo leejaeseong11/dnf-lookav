@@ -1,5 +1,9 @@
 package com.dnf.lookav.common;
 
+import static com.dnf.lookav.avatar.exception.ErrorCode.MALFORMED_URL;
+
+import com.dnf.lookav.avatar.exception.MyException;
+
 import lombok.extern.slf4j.Slf4j;
 
 import org.json.JSONObject;
@@ -59,7 +63,7 @@ public class DnfApi {
 
             return new JSONObject(sb.toString());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new MyException(MALFORMED_URL);
         }
     }
 }

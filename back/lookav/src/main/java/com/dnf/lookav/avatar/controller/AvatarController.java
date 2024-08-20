@@ -1,5 +1,7 @@
 package com.dnf.lookav.avatar.controller;
 
+import com.dnf.lookav.avatar.exception.ErrorCode;
+import com.dnf.lookav.avatar.exception.MyException;
 import com.dnf.lookav.common.AwsS3;
 import com.dnf.lookav.common.DnfApi;
 
@@ -9,10 +11,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
-@RestController("/avatar")
+@RestController
+@RequestMapping("/avatar")
 @RequiredArgsConstructor
 public class AvatarController {
     private final DnfApi dnfApi;
@@ -30,6 +34,12 @@ public class AvatarController {
 
     @PostMapping("/add")
     public String add(String characterName, String server) {
+
         return "test";
+    }
+
+    @GetMapping("/add")
+    public String adds(String characterName, String server) {
+        throw new MyException(ErrorCode.AWS_SERVER_ERROR);
     }
 }
