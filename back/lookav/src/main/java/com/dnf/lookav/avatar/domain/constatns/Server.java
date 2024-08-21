@@ -1,4 +1,4 @@
-package com.dnf.lookav.avatar.domain;
+package com.dnf.lookav.avatar.domain.constatns;
 
 public enum Server {
     anton,

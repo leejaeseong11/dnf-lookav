@@ -1,14 +1,16 @@
 package com.dnf.lookav.avatar.domain;
 
+import com.dnf.lookav.avatar.domain.constatns.AvatarSlot;
+
 import jakarta.persistence.*;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
+@Builder
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class AvatarItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,5 +25,5 @@ public class AvatarItem {
     @JoinColumn(name = "avatar_id")
     private Avatar avatar;
 
-    private String slot;
+    private AvatarSlot slot;
 }

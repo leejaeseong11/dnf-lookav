@@ -60,6 +60,12 @@ public class DnfApi {
         return getDataFromDnfApi(addUrl);
     }
 
+    public String getItemRarity(String itemId) {
+        String addUrl = "/items/" + itemId + "?apikey=" + apiKey;
+        JSONObject itemData = getDataFromDnfApi(addUrl);
+        return itemData.getString("itemRarity");
+    }
+
     private static JSONObject getDataFromDnfApi(String addUrl) {
         try {
             URL url = new URL(dnfApiUrl + addUrl);

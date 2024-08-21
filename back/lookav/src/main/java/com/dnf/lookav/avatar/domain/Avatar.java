@@ -1,5 +1,6 @@
 package com.dnf.lookav.avatar.domain;
 
+import com.dnf.lookav.avatar.domain.constatns.Server;
 import com.dnf.lookav.avatar.dto.AvatarDto;
 
 import jakarta.persistence.*;
