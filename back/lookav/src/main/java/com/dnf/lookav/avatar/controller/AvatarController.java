@@ -22,6 +22,12 @@ public class AvatarController {
     private final AwsS3 awsS3;
     private final AvatarService avatarService;
 
+    @PostMapping("/add")
+    public String add(@RequestBody AvatarDto avatarDto) {
+        avatarService.saveAvatar(avatarDto);
+        return "test";
+    }
+
     @GetMapping
     public String search(@RequestParam(value = "date", defaultValue = "all") String date) {
         JSONObject result = dnfApi.getCharacterId("cain", "안중");
@@ -30,12 +36,6 @@ public class AvatarController {
                 resultString,
                 "https://img-api.neople.co.kr/df/servers/cain/characters/e3a8dd3a61f2b5716bd54aeaba75b2e3?zoom=1");
         return resultString;
-    }
-
-    @PostMapping("/add")
-    public String add(@RequestBody AvatarDto avatarDto) {
-        avatarService.saveAvatar(avatarDto);
-        return "test";
     }
 
     @GetMapping("/add")

@@ -31,14 +31,28 @@ public class AvatarServiceImpl implements AvatarService {
     public Long saveAvatar(AvatarDto avatarDto) {
         JSONObject characterInfo =
                 dnfApi.getCharacterAvatar(avatarDto.getServerId(), avatarDto.getCharacterId());
-        avatarDto.setJob(characterInfo.getString("jobName"));
-        avatarDto.setLikes(0);
-        avatarDto.setRegisterDate(LocalDateTime.now());
-        awsS3.uploadImage(avatarDto.getCharacterId(), avatarDto.getServerId());
-        avatarRepository.save(Avatar.toEntity(avatarDto));
+        Avatar findAvatar = avatarRepository.findByCharacterId(avatarDto.getCharacterId());
+        if (findAvatar != null) {
+            AvatarDto updateAvatarDto = new AvatarDto();
+            updateAvatarDto.setId(findAvatar.getId());
+            updateAvatarDto.setCharacterId(findAvatar.getCharacterId());
+            updateAvatarDto.setJob(findAvatar.getJob());
+            updateAvatarDto.setServerId(findAvatar.getServer().toString());
+            updateAvatarDto.setLikes(findAvatar.getLikes());
+            updateAvatarDto.setRegisterDate(LocalDateTime.now());
+            avatarRepository.save(Avatar.toEntity(updateAvatarDto));
+        } else {
+            avatarDto.setJob(characterInfo.getString("jobName"));
+            avatarDto.setLikes(0);
+            avatarDto.setRegisterDate(LocalDateTime.now());
+            awsS3.uploadImage(avatarDto.getCharacterId(), avatarDto.getServerId());
+            avatarRepository.save(Avatar.toEntity(avatarDto));
+        }
 
         // todo: sava avatar
         JSONArray avatars = characterInfo.getJSONArray("avatar");
+
+        // todo: save tag
 
         return null;
     }

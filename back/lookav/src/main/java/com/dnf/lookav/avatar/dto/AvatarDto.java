@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class AvatarDto {
+    private Long id;
     private String characterId;
     private String job;
     private String serverId;

@@ -35,6 +35,7 @@ public class Avatar {
 
     public static Avatar toEntity(AvatarDto avatarDto) {
         return Avatar.builder()
+                .id(avatarDto.getId())
                 .characterId(avatarDto.getCharacterId())
                 .job(avatarDto.getJob())
                 .server(Server.valueOf(avatarDto.getServerId()))
