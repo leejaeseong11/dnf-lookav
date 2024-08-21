@@ -40,9 +40,7 @@ public class AwsS3 {
                     ObjectMetadata metadata = new ObjectMetadata();
                     metadata.setContentType("image/jpeg");
                     putObjectRequest.setMetadata(metadata);
-
                     amazonS3.putObject(putObjectRequest);
-                    amazonS3 = null;
                 }
                 in.close();
             } catch (IOException e) {

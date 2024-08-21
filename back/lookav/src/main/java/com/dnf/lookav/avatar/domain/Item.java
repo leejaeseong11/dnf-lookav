@@ -19,4 +19,6 @@ public class Item {
     private String name;
 
     private String itemRarity;
+    private String dnfItemId;
+    private String job;
 }

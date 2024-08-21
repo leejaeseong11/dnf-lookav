@@ -12,7 +12,6 @@ import com.dnf.lookav.common.AwsS3;
 import com.dnf.lookav.common.DnfApi;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -24,7 +23,6 @@ import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class AvatarServiceImpl implements AvatarService {
     private final DnfApi dnfApi;
     private final AwsS3 awsS3;
@@ -47,6 +45,7 @@ public class AvatarServiceImpl implements AvatarService {
             updateAvatarDto.setServerId(findAvatar.getServer().toString());
             updateAvatarDto.setLikes(findAvatar.getLikes());
             updateAvatarDto.setRegisterDate(LocalDateTime.now());
+            awsS3.uploadImage(avatarDto.getCharacterId(), avatarDto.getServerId());
             findAvatar = avatarRepository.save(Avatar.toEntity(updateAvatarDto));
             isExistAvatar = true;
         } else {
@@ -70,17 +69,25 @@ public class AvatarServiceImpl implements AvatarService {
             boolean itemNameIsNull =
                     avatars.getJSONObject(i).getJSONObject("clone").isNull("itemName");
             String itemRarity;
+            String itemId;
             if (itemNameIsNull) {
                 itemName = avatars.getJSONObject(i).getString("itemName");
                 itemRarity = avatars.getJSONObject(i).getString("itemRarity");
+                itemId = avatars.getJSONObject(i).getString("itemId");
             } else {
                 itemName = avatars.getJSONObject(i).getJSONObject("clone").getString("itemName");
-                String itemId = avatars.getJSONObject(i).getJSONObject("clone").getString("itemId");
+                itemId = avatars.getJSONObject(i).getJSONObject("clone").getString("itemId");
                 itemRarity = dnfApi.getItemRarity(itemId);
             }
-            Item findItem = itemRepository.findByName(itemName);
+            Item findItem = itemRepository.findByDnfItemId(itemId);
             if (findItem == null) {
-                Item saveItem = Item.builder().name(itemName).itemRarity(itemRarity).build();
+                Item saveItem =
+                        Item.builder()
+                                .name(itemName)
+                                .itemRarity(itemRarity)
+                                .dnfItemId(itemId)
+                                .job(findAvatar.getJob())
+                                .build();
                 itemRepository.save(saveItem);
                 findItem = saveItem;
             }
