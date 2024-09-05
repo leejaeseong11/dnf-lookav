@@ -1,10 +1,14 @@
 package com.dnf.lookav.avatar.service;
 
+import static com.dnf.lookav.avatar.exception.ErrorCode.*;
+
 import com.dnf.lookav.avatar.domain.Avatar;
 import com.dnf.lookav.avatar.domain.AvatarItem;
 import com.dnf.lookav.avatar.domain.Item;
 import com.dnf.lookav.avatar.domain.constatns.AvatarSlot;
 import com.dnf.lookav.avatar.dto.AvatarDto;
+import com.dnf.lookav.avatar.dto.AvatarItemDto;
+import com.dnf.lookav.avatar.exception.MyException;
 import com.dnf.lookav.avatar.repository.AvatarItemRepository;
 import com.dnf.lookav.avatar.repository.AvatarRepository;
 import com.dnf.lookav.avatar.repository.ItemRepository;
@@ -20,6 +24,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -125,5 +131,28 @@ public class AvatarServiceImpl implements AvatarService {
     public Page<AvatarDto> findAvatarList(Pageable pageable) {
         // todo
         return null;
+    }
+
+    @Override
+    public List<AvatarItemDto> findAvatarItemList(String characterId) {
+        Avatar findAvatar = avatarRepository.findByCharacterId(characterId);
+        List<AvatarItemDto> returnedAvatarItemDto = new ArrayList<>();
+
+        if (findAvatar == null) {
+            throw new MyException(CHARACTER_NOT_FOUND);
+        } else {
+            List<AvatarItem> findAvatarItemList = avatarItemRepository.findAllByAvatar(findAvatar);
+            for (AvatarItem avatarItem : findAvatarItemList) {
+                AvatarItemDto tempAvatarItem = new AvatarItemDto();
+                Item findItem = avatarItem.getItem();
+                tempAvatarItem.setItemName(findItem.getName());
+                tempAvatarItem.setItemRarity(findItem.getItemRarity());
+                tempAvatarItem.setStatus(findItem.getStatus());
+                tempAvatarItem.setPrice(findItem.getPrice());
+                tempAvatarItem.setSlot(String.valueOf(avatarItem.getSlot()));
+                returnedAvatarItemDto.add(tempAvatarItem);
+            }
+        }
+        return returnedAvatarItemDto;
     }
 }

@@ -1,6 +1,7 @@
 package com.dnf.lookav.avatar.controller;
 
 import com.dnf.lookav.avatar.dto.AvatarDto;
+import com.dnf.lookav.avatar.dto.AvatarItemDto;
 import com.dnf.lookav.avatar.exception.ErrorCode;
 import com.dnf.lookav.avatar.exception.MyException;
 import com.dnf.lookav.avatar.service.AvatarService;
@@ -12,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -28,8 +31,13 @@ public class AvatarController {
         return "test";
     }
 
+    @GetMapping("/{characterId}/item")
+    public List<AvatarItemDto> searchAvatarItem(@PathVariable String characterId) {
+        return avatarService.findAvatarItemList(characterId);
+    }
+
     @GetMapping
-    public String search(
+    public String searchAll(
             @RequestParam(value = "date", defaultValue = "all") String date) { // todo + frontend
         JSONObject result = dnfApi.getCharacterId("cain", "안중");
         String resultString = result.getJSONArray("rows").getJSONObject(0).getString("characterId");
