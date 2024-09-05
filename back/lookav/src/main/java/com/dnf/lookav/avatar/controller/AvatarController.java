@@ -29,7 +29,8 @@ public class AvatarController {
     }
 
     @GetMapping
-    public String search(@RequestParam(value = "date", defaultValue = "all") String date) {
+    public String search(
+            @RequestParam(value = "date", defaultValue = "all") String date) { // todo + frontend
         JSONObject result = dnfApi.getCharacterId("cain", "안중");
         String resultString = result.getJSONArray("rows").getJSONObject(0).getString("characterId");
         awsS3.uploadImage(

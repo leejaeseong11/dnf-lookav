@@ -21,4 +21,6 @@ public class Item {
     private String itemRarity;
     private String dnfItemId;
     private String job;
+    private String status;
+    private int price;
 }

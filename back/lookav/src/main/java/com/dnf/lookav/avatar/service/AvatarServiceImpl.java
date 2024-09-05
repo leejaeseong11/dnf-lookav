@@ -116,13 +116,14 @@ public class AvatarServiceImpl implements AvatarService {
             }
         }
 
-        // todo: save tag
+        // todo: save tag (find free llm)
 
-        return null;
+        return null; // todo: return charater id
     }
 
     @Override
     public Page<AvatarDto> findAvatarList(Pageable pageable) {
+        // todo
         return null;
     }
 }
