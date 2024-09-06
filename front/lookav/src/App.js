@@ -7,7 +7,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/avatar" element={<Avatar />}></Route>
+          <Route path="/avatar/:characterId" element={<Avatar />}></Route>
         </Routes>
       </BrowserRouter>
     </div>
